@@ -27,11 +27,9 @@ target_link_libraries(example dl_py2f)
 
 # either 32- or 64-bit integers (without or with -fdefault-integer-8 for GNU) should work for the Fortran->Python interoperability
 if("${CMAKE_Fortran_COMPILER_ID}" STREQUAL GNU)
-    # NB: it is necessary to use -fPIC!
 #    set_target_properties(example PROPERTIES COMPILE_FLAGS "-O2 -fPIC -fdefault-integer-8")
     set_target_properties(example PROPERTIES COMPILE_FLAGS "-O2 -fPIC")
 elseif("${CMAKE_Fortran_COMPILER_ID}" STREQUAL IntelLLVM OR "CMAKE_Fortran_COMPILER_ID" STREQUAL Intel)
-    # NB: it is necessary to use -fPIC!
     set_target_properties(example PROPERTIES COMPILE_FLAGS "-O2 -fPIC -i8")
 else()
     message(" WARNING: Unknown CMAKE_FORTRAN_COMPILER_ID!")
