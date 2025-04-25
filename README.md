@@ -65,17 +65,26 @@ On some READMEs, you may see small images that convey metadata, such as whether 
 Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
 ## Compiling
-For compiling and running this example using `DL_PY2F`, please follow the steps:
+For compiling and running this example application using `DL_PY2F`, please follow the steps:
 1. Cloning the example
+
 `$ git clone https://github.com/stfc/dl_py2f-example.git my_example`
+
 2. Navigating to the example's source package (e.g., `my_example`):
+
 `$ cd my_example`
+
 3. Clone DL_PY2F from the repository:
+
 `$ git clone git clone https://github.com/stfc/dl_py2f-example.git dl_py2f dl_py2f`
+
 4. Make a directory for building
+
 `$ mkdir build`
 `$ cd build`
+
 5. Configure and compile using cmake
+
 `$ cmake ..; make`
 
 # to clean
