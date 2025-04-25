@@ -10,16 +10,16 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ## Required libraries and tools
 
-+--------------------------------+---------------+-------+
-|| Tools & Libraries             || Min. version || Note |
-+================================+===============+=======+
-|| gcc/gfortran                  || 7.3          ||      |
-|| OR icc/ifort                  || 17           || [a]_ |
-+--------------------------------+---------------+-------+
-|| cmake                         || 3.16         ||      |
-|| python3-dev                   || 3.8          ||      |
-|| python3-numpy                 || 1.21.5       ||      |
-+--------------------------------+---------------+-------+
+
+| Tools & Libraries             | Min. version | Note |
+|:------------------------------|:-------------|:-----|
+| gcc/gfortran                  | 7.3          |      |
+| OR icc/ifort                  | 17           | [a]_ |
+|:------------------------------|:-------------|:-----|
+| cmake                         | 3.16         |      |
+| python3-dev                   | 3.8          |      |
+| python3-numpy                 | 1.21.5       |      |
+
 
 :NB: The above package names are based on Ubuntu Linux. They may vary on other
      operating systems.
