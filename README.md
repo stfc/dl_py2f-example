@@ -8,17 +8,24 @@ To make it easy for you to get started with GitLab, here's a list of recommended
 
 Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
-## Add your files
+## Required libraries and tools
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
++--------------------------------+---------------+-------+
+|| Tools & Libraries             || Min. version || Note |
++================================+===============+=======+
+|| gcc/gfortran                  || 7.3          ||      |
+|| OR icc/ifort                  || 17           || [a]_ |
++--------------------------------+---------------+-------+
+|| cmake                         || 3.16         ||      |
+|| python3-dev                   || 3.8          ||      |
+|| python3-numpy                 || 1.21.5       ||      |
++--------------------------------+---------------+-------+
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/ylue/dl_py2f-example.git
-git branch -M main
-git push -uf origin main
-```
+:NB: The above package names are based on Ubuntu Linux. They may vary on other
+     operating systems.
+
+.. [a] The Fortran-to-Python method does not yet work with the Intel compilers as Intel's proprietary
+       .mod file format is unpublished and unsupported.
 
 ## Integrate with your tools
 
@@ -64,31 +71,34 @@ On some READMEs, you may see small images that convey metadata, such as whether 
 ## Visuals
 Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
+# Getting started
+
 ## Compiling
 For compiling and running this example application using `DL_PY2F`, please follow the steps:
-1. Cloning the example
+1. Cloning the example package to, e.g., `my_example`:
 
 `$ git clone https://github.com/stfc/dl_py2f-example.git my_example`
 
-2. Navigating to the example's source package (e.g., `my_example`):
+2. Navigating to the example's source package:
 
 `$ cd my_example`
 
-3. Clone DL_PY2F from the repository:
+3. Cloning `DL_PY2F` from the repository:
 
 `$ git clone git clone https://github.com/stfc/dl_py2f-example.git dl_py2f dl_py2f`
 
-4. Make a directory for building
+4. Making a directory for building
 
 `$ mkdir build`
 `$ cd build`
 
-5. Configure and compile using cmake
+5. Configuring and compiling using cmake
 
 `$ cmake ..; make`
 
-# to clean
-make clean
+## to clean
+`$ cd build`
+`$ make clean`
 
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
