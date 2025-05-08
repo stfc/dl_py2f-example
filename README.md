@@ -47,7 +47,7 @@ For compiling and running this example application using `DL_PY2F`, please follo
 
 `$ git clone https://github.com/stfc/dl_py2f-example.git my_copy`
 
-2. Navigating to the example package's source package (which contains this README.md file):
+2. Navigating to the example package's source package (which contains this _README.md_ file):
 
 `$ cd my_copy`
 
@@ -73,7 +73,7 @@ For compiling and running this example application using `DL_PY2F`, please follo
 
 There is an exemplar user input script for launching the example project. To run it, please
 
-1. Navigating to the example package's source package (which contains the current README.md file):
+1. Navigating to the example package's source package (which contains the current _README.md_ file):
 
 `$ cd my_copy`
 
@@ -90,6 +90,8 @@ There is an exemplar user input script for launching the example project. To run
 `$ cd example/build`
 
 `$ make clean`
+
+There is also a bash script _compile.sh_ containing all the above steps which is ready for executing.
 
 # Miscellaneous
 
