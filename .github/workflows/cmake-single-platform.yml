@@ -23,19 +23,19 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: mkdir
-      working-directory: ${{github.workspace}}
+      working-directory: ${{github.workspace}}/example
       run: mkdir build
 
     - name: Clone DL_PY2F
-      working-directory: ${{github.workspace}}
+      working-directory: ${{github.workspace}}/example
       run: git clone https://github.com/stfc/dl_py2f.git dl_py2f
 
     - name: Configure CMake
-      working-directory: ${{github.workspace}}/build  
-      run: cmake ..
+      working-directory: ${{github.workspace}}/example/build
+      run: cmake ${{github.workspace}}/example
 
     - name: Build
-      working-directory: ${{github.workspace}}/build
+      working-directory: ${{github.workspace}}/example/build
       run: make
 
     - name: Test
