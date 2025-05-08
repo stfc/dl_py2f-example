@@ -21,6 +21,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: NumPy
+      run: python3 -m pip install numpy
     
     - name: mkdir
       working-directory: ${{github.workspace}}/example
