@@ -1,8 +1,6 @@
 import ctypes
-import numpy
 from numpy import dtype, float64, full, int64, zeros
-import dl_py2f
-from . import callback
+from . import callback, dl_py2f
 
 # it has to be a child class of ctypes.Structure
 class Example(ctypes.Structure):

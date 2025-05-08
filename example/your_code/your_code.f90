@@ -33,11 +33,6 @@ subroutine main_of_your_code()
     allocate(var_of_t04%rarr21(12002))
     allocate(arr02_of_char(6))
     arr02_of_char = 'arr02_of_char'
-    print *, "### loc of arr02_of_char =", loc(arr02_of_char)
-    print *, "### loc of arr02_of_char(2) =", loc(arr02_of_char(2)) - loc(arr02_of_char)
-    print *, "### loc of arr02_of_char(3) =", loc(arr02_of_char(3)) - loc(arr02_of_char(2))
-    print *, "### shape of arr03_of_int =", shape(arr03_of_int)
-    print *, "### shape of rarr03 =", shape(var_of_t04%rarr03)
 
     var_of_t04%rvar06 => var03_of_real
 

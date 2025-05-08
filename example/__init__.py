@@ -1,8 +1,8 @@
 import numpy
 import ctypes
 import os.path
-import dl_py2f
-import example_dirs
+from . import callback, dl_py2f, example_dirs
+from .example import Example
 
 def doSomething(obj):
 
@@ -21,5 +21,6 @@ if __name__ == '__main__':
 
     doSomething()
 
-__all__ = 'doSomething', 'dl_py2f'
+# for convenience these names can be imported by the user with `from example import *`
+__all__ = 'callback', 'doSomething', 'dl_py2f', 'Example'
 

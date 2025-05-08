@@ -1,4 +1,4 @@
-import example_dirs
+from . import example_dirs
 
 def callback(*args) -> int:
     '''Callback function for DL_FIND'''
@@ -37,7 +37,7 @@ def callback(*args) -> int:
     # WARNING: this is a BETA version which must be used WITH CAUTION!
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    import dl_py2f
+    from . import dl_py2f
     from os import path
     from ctypes import c_float, c_double, c_long
 
@@ -115,10 +115,6 @@ def callback(*args) -> int:
 
 
     arr02_of_char = libexample.getValue('arr02_of_char', str, (6,), module='yourmodule')
-    print("### arr02_of_char =", arr02_of_char)
-    print("### arr03_of_int =", libexample.modules.yourmodule.arr03_of_int)
-    return 0
-    print("### arr02_of_char =", libexample.modules.yourmodule.arr02_of_char)
 
     ##################################################################
     ### method B: explicit module parsing ###
