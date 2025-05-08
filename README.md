@@ -85,13 +85,15 @@ There is an exemplar user input script for launching the example project. To run
 
 `$ python3 user_script.py`
 
+:bulb: For using `DL_PY2F` in your own real project, there are more ways to organise the source package's structure.
+
 ## Cleaning
 
 `$ cd example/build`
 
 `$ make clean`
 
-There is also a bash script _compile.sh_ containing all the above steps which is ready for executing.
+:bulb: There is also a bash script _compile.sh_ containing all the above steps which is ready for executing.
 
 # Miscellaneous
 
