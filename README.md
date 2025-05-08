@@ -1,5 +1,7 @@
 # DL_PY2F Example
 
+[![CMake on a single platform](https://github.com/stfc/dl_py2f-example/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/cmake-single-platform.yml)
+
 # About
 
 This package contains a toy application which uses [`DL_PY2F`](https://github.com/stfc/dl_py2f-example) for the interoperability in both Python-to-Fortran and Fortran-to-Python ways.
