@@ -12,3 +12,4 @@ my_example.tags   = numpy.arange(10)
 # run the project's function
 doSomething(my_example)
 
+print('\n Example exiting normally.')
