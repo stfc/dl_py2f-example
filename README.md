@@ -1,6 +1,6 @@
 # DL_PY2F Example
 
-[![CMake on a single platform](https://github.com/stfc/dl_py2f-example/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/cmake-single-platform.yml)
+[![GNU](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml)
 
 # About
 
