@@ -59,7 +59,7 @@ For compiling and running this example application using `DL_PY2F`, please follo
 
 4. Cloning `DL_PY2F` from the repository:
 
-`$ git clone git clone https://github.com/stfc/dl_py2f.git dl_py2f`
+`$ git clone https://github.com/stfc/dl_py2f.git dl_py2f`
 
 5. Making a directory for building
 
