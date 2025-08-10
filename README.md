@@ -4,7 +4,7 @@
 
 # About
 
-This package contains a toy application which uses [`DL_PY2F`](https://github.com/stfc/dl_py2f-example) for the interoperability in both Python-to-Fortran and Fortran-to-Python ways.
+This package contains a toy application which uses [`DL_PY2F`](https://github.com/stfc/dl_py2f) for the interoperability in both Python-to-Fortran and Fortran-to-Python ways.
 
 ## License
 
