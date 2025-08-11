@@ -35,7 +35,7 @@ jobs:
 
     - name: Configure CMake
       working-directory: ${{github.workspace}}/example/build
-      run: cmake ${{github.workspace}}/example
+      run: cmake -DFROM_SOURCE:BOOL=TRUE ${{github.workspace}}/example
 
     - name: Build
       working-directory: ${{github.workspace}}/example/build
