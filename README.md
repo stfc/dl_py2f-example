@@ -4,7 +4,7 @@
 
 # About
 
-This package contains a toy application which uses [`DL_PY2F`](https://github.com/stfc/dl_py2f) for the interoperability in both Python-to-Fortran and Fortran-to-Python ways.
+This package contains a toy application which demonstrates how to use [`DL_PY2F`](https://github.com/stfc/dl_py2f) for the interoperability in both Python-to-Fortran and Fortran-to-Python ways. The package is also a test bench for validating `DL_PY2F`.
 
 ## License
 
@@ -43,7 +43,9 @@ The Python-to-Fortran interoperability demonstrated in `DL_PY2F example` has bee
 
 ## Compiling
 
-For compiling and running this example application using `DL_PY2F`, please follow the steps (bash environment assumed here)
+### Using `DL_PY2F` source code
+
+For compiling and running this example application with the source code of `DL_PY2F`, please follow the steps (bash environment assumed here)
 
 1. Cloning the example package to, e.g., `my_copy` (you probably have done this already):
 
@@ -69,7 +71,39 @@ For compiling and running this example application using `DL_PY2F`, please follo
 
 6. Configuring and compiling using cmake
 
+`$ cmake -DFROM_SOURCE:BOOL=TRUE ..; make`
+
+Please see the `bash` script [`compile_from_source.sh`](https://github.com/stfc/dl_py2f-example/blob/main/compile_from_source.sh) provided by the example package for this method.
+
+### Using system installed `DL_PY2F` (Debian only)
+
+`DL_PY2F` has been published and deployed on [launchpad.net](https://launchpad.net/~dl-py2f/+archive/ubuntu/ppa) and is thus available for installing using `apt` for Debian-type systems (e.g., Ubuntu):
+
+`$ sudo add-apt-repository ppa:dl-py2f/ppa`
+
+`$ sudo apt update`
+
+`$ sudo apt install dl-py2f`
+
+:warning: Since Debian PPA does not allow underscore `_`, the package name published on [launchpad.net](https://launchpad.net/~dl-py2f/+archive/ubuntu/ppa) is **`dl-py2f`** but not `dl_py2f`.
+
+:bulb: `sudo` access is required for installing system-wide packages using `apt`.
+
+Compiling the example package is similar to the steps of the above method, just without cloning `DL_PY2F` or telling `cmake` to use its source code:
+
+`$ git clone https://github.com/stfc/dl_py2f-example.git my_copy`
+
+`$ cd my_copy`
+
+`$ cd example`
+
+`$ mkdir build`
+
+`$ cd build`
+
 `$ cmake ..; make`
+
+Please see the `bash` script [`install_with_apt.sh`](https://github.com/stfc/dl_py2f-example/blob/main/install_with_apt.sh) provided by the example package for this method.
 
 ## Running
 
