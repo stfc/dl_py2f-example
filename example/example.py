@@ -1,6 +1,12 @@
 import ctypes
 from numpy import dtype, float64, full, int64, zeros
-from . import callback, dl_py2f
+from . import callback
+# system installed DL_PY2F
+try:
+    import dl_py2f
+# DL_PY2F compiled from source code
+except:
+    from . import dl_py2f
 
 # it has to be a child class of ctypes.Structure
 class Example(ctypes.Structure):
