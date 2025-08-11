@@ -43,7 +43,9 @@ jobs:
 
     - name: Test
       working-directory: ${{github.workspace}}
-      run: python3 user_script.py
+      run: |
+        set -o pipefail
+        python3 user_script.py
       env:
         PYTHONPATH: ${{github.workspace}}
 
