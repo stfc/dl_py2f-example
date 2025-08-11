@@ -18,9 +18,16 @@ add_library(example SHARED example.f90
                            your_code/your_module.f90
                            your_code/data_module.f90)
 
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/dl_py2f)
-
-include_directories(${PROJECT_BINARY_DIR}/dl_py2f/modules)
+# compile DL_PY2F from source
+if(FROM_SOURCE)
+    add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/dl_py2f)
+    include_directories(${PROJECT_BINARY_DIR}/dl_py2f/modules)
+# use the system DL_PY2F: on Debian-type system only (installed via apt)
+else()
+    link_directories(/lib/x86_64-linux-gnu)
+    #set_target_properties(example PROPERTIES LINK_FLAGS "-L/lib/x86_64-linux-gnu -ldl_py2f")
+    include_directories(/usr/include/x86_64-linux-gnu)
+endif()
 
 target_link_libraries(example dl_py2f)
 
