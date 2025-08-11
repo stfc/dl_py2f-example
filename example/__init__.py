@@ -1,13 +1,7 @@
 import numpy
 import ctypes
 import os.path
-from . import callback, example_dirs
-# system installed DL_PY2F
-try:
-    import dl_py2f
-# DL_PY2F compiled from source code
-except:
-    from . import dl_py2f
+from . import callback, dl_py2f, example_dirs
 from .example import Example
 
 def doSomething(obj):
