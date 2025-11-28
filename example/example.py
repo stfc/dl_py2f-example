@@ -1,5 +1,5 @@
 import ctypes
-from numpy import dtype, float64, full, int64, zeros
+from numpy import dtype, float64, full, int32, int64, zeros
 from . import callback
 # system installed DL_PY2F
 try:
@@ -26,6 +26,7 @@ class Example(ctypes.Structure):
                 'c'       : zeros(shape=(5)  ,      dtype=int64),
                 'd'       : zeros(shape=(12) ,      dtype=float64),
                 'e'       : zeros(shape=(18) ,      dtype=float64),
+                'f'       : zeros(shape=(5,9),      dtype=int32),
                 # NB: we have to use a one-element array to make its value writeable in Fortran because
                 # scalars such as float are immutable in Python!
                 'energy'  : zeros(shape=(1)  ,      dtype=float64),
@@ -49,6 +50,7 @@ class Example(ctypes.Structure):
 
     # a master array of the numpy.recarray type will be created as self._master containing
     # the following fields (in the given sequence)
+    # NB: all must be of 8-byte (64-bit) types for aligning!
     _fields     = 'names', 'factors', 'coords', 'tags', 'names', 'tags', 'arr', 'zmatrix'
 
     # initialisation (by @dl_py2f.utils.objutils.init()) of entities defined in this sequence
@@ -181,6 +183,13 @@ class Example(ctypes.Structure):
             marray.mask[i] = tuple(mask[i])
 
         return marray
+
+
+    @property
+    def angle(self):
+        '''An exemplar shortcut to retrieve part of the structured array'''
+
+        return self.zmatrix['angle']
 
 
     @zmatrix.setter
