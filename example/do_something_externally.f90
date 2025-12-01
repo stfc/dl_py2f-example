@@ -58,4 +58,6 @@ integer function get_coords() result(ierror)
 
     call PyObj%get('coords', coords)
 
+    ierror = 0
+
 endfunction get_coords

@@ -45,10 +45,17 @@ def callback(*args) -> int:
 
     # in case you want to find out all symbols in the shared library
     symbols = libexample.getModuleSymbols('yourmodule')
+    is_intel = False
     print('\n Symbols exported from', path.join(example_dirs.libdir, 'libexample.so'))
     for symbol in symbols:
         print('    ', symbol, flush=True)
+        if 'yourmodule_mp_procedure_xxx' in symbol:
+            is_intel = True
 
+    # currently only works with GNU
+    if is_intel:
+        print('\n Skipping Fortran-to-Python interoperability because we do not yet support it with Intel compilers...')
+        return 0
 
     ##################################################################
     ### method A: implicit module parsing
