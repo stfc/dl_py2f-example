@@ -5,8 +5,8 @@ function do_something_externally() result(ierror)
 
     implicit none
 
-    integer               :: ierror
-    real(kind=8), pointer :: onedimdbl(:)
+    integer(kind=8)          :: ierror
+    real(kind=8)   , pointer :: onedimdbl(:)
 
     ! map the changes in the main routine (Fortran) back to Python
     call PyObj%set('coords', coords)
@@ -53,8 +53,6 @@ integer function get_coords() result(ierror)
     use DataModule   , only : coords
 
     implicit none
-
-    integer nparticles
 
     call PyObj%get('coords', coords)
 

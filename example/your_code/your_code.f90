@@ -31,7 +31,7 @@ subroutine main_of_your_code()
     allocate(var_of_t04%t2ar02(5,6))
     allocate(var_of_t04%t3ar01(56))
     allocate(var_of_t04%rarr21(12002))
-    allocate(arr02_of_char(6))
+    allocate(arr02_of_char(26))
     arr02_of_char = 'arr02_of_char'
 
     var_of_t04%rvar06 => var03_of_real

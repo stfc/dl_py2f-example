@@ -36,8 +36,8 @@ target_link_libraries(example dl_py2f)
 if("${CMAKE_Fortran_COMPILER_ID}" STREQUAL GNU)
     # use of -fdefault-integer-8 must be in line with DL_PY2F
 #    set_target_properties(example PROPERTIES COMPILE_FLAGS "-O2 -fPIC -fdefault-integer-8")
-    set_target_properties(example PROPERTIES COMPILE_FLAGS "-O2 -fPIC")
-    set_target_properties(dl_py2f PROPERTIES COMPILE_FLAGS "-O2 -fPIC")
+    set_target_properties(example PROPERTIES COMPILE_FLAGS "-O3 -fPIC")
+    set_target_properties(dl_py2f PROPERTIES COMPILE_FLAGS "-O3 -fPIC")
 elseif("${CMAKE_Fortran_COMPILER_ID}" STREQUAL IntelLLVM OR "CMAKE_Fortran_COMPILER_ID" STREQUAL Intel)
     # use of -i8 must be in line with DL_PY2F
     set_target_properties(example PROPERTIES COMPILE_FLAGS "-O2 -fPIC")

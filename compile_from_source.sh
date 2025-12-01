@@ -8,9 +8,6 @@ rm -rf dl_py2f
 rm -rf build
 mkdir build
 git clone https://github.com/stfc/dl_py2f.git dl_py2f
-cd dl_py2f
-git checkout 20-memory-duplication-of-arrays
-cd ..
 cd build
 
 # uncomment to use Intel compilers
