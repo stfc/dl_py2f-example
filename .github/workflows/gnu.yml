@@ -4,7 +4,9 @@ name: GNU
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - main
+      - 22-update-for-dl_py2f
   pull_request:
     branches: [ "main" ]
 
