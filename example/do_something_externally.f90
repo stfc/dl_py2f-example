@@ -5,15 +5,23 @@ function do_something_externally() result(ierror)
 
     implicit none
 
-    integer               :: ierror
-    real(kind=8), pointer :: onedimdbl(:)
+    integer(kind=8)          :: ierror
+    real(kind=8)   , pointer :: onedimdbl(:)
 
     ! map the changes in the main routine (Fortran) back to Python
     call PyObj%set('coords', coords)
+    ! float is immutable in Python therefore we use an array of a single element
     call PyObj%set('energy', (/ energy /))
 
+    ! the best way here to alter a float or an interger scalar value in Python is using it as an array
+    ! (of a single element) because it is *immutable* in Python, though it still can be done in C (see
+    ! the Fortran-to-Python interoperability)
     allocate(onedimdbl(1))
-    call PyObj%get('energy', onedimdbl)
+    call PyObj%get('energy', onedimdbl, readonly=.true.)
+    ! this takes no effect on the Python side because readonly=.true.
+    onedimdbl = onedimdbl*1.5
+    ! in this case the Python value can only be change by the setter function
+    call PyObj%set('energy', onedimdbl)
 
     print *
     print *, "do_something_externally (F): energy before callback =", onedimdbl
@@ -34,9 +42,11 @@ function do_something_externally() result(ierror)
     print *
     print *, "do_something_externally (F): energy after callback =", onedimdbl
 
-    deallocate(onedimdbl)
+    ! do NOT deallocate because the pointer onedimdbl does not own the NumPy data
+    nullify(onedimdbl)
 
 endfunction do_something_externally
+! this is how the original project retrieves data from the current extension
 integer function get_coords() result(ierror)
 
     use ExampleModule, only : PyObj
@@ -44,10 +54,8 @@ integer function get_coords() result(ierror)
 
     implicit none
 
-    integer nparticles
-
-    call PyObj%get('size', nparticles)
-    allocate(coords(3,nparticles))
     call PyObj%get('coords', coords)
+
+    ierror = 0
 
 endfunction get_coords

@@ -20,12 +20,12 @@ module yourModule
         integer         :: ivar05 = 0
         integer         :: ivar06
     end type type_02
+    ! pointers MUST always be initialised as null() otherwise there could be unpredictable behaviours!
     type type_03
         real(kind=4)               :: rarr00(13)
-        integer      , pointer     :: ivar00
+        integer      , pointer     :: ivar00 => null() ! DL_PY2F will issue a warning if the pointer isn't initialised by nullifying when debug=True
         type(type_03), allocatable :: t3ar00(:)
-        type(type_03), pointer     :: t3va00 !=> null() ! this is just for testing because it's very dangerous to use unnullified pointers (wild pointers), same below!
-                                             ! DL_PY2F will issue a warning if debug=True
+        type(type_03), pointer     :: t3va00 => null()
         integer                    :: ivar01
         type(type_02)              :: t2ar01(5)
         type(type_03), allocatable :: t3ar01(:,:)
@@ -40,20 +40,16 @@ module yourModule
         integer                    :: ivar04 = 444
         type(type_03), pointer     :: t3va01 => null()
         integer(kind=8)            :: ivar05 = 555
-        integer, pointer           :: ivar06
+        integer, pointer           :: ivar06 => null()
         character(len=15)          :: cvar02 = 'char 02'
         type(type_02), pointer     :: t2va02(:)! => null() 
         integer(kind=8)            :: ivar07 = 777
         type(type_02)              :: t2va03
         integer(kind=8)            :: ivar08 = 888
         contains
-            procedure, private :: procedure_xx
+            procedure, private :: procedure_xx, procedure_xxx, procedure_yy, procedure_yyy
             procedure, private :: xx_int, xx_float
             generic  , public  :: xx => xx_int, xx_float
-    !        procedure :: procedure_yy
-    !        procedure :: procedure_xxx
-    !        procedure, public :: xxx => xx_int, xx_float
-    !        procedure :: procedure_yyy
     endtype type_03
     type type_04
         integer                           :: ivar01 = 101
@@ -64,18 +60,18 @@ module yourModule
         integer                           :: ivar03 = 333333
         character(len=:) , allocatable    :: cvar02
         integer                           :: ivar04
-        type(type_02)    , pointer        :: t2va01
+        type(type_02)    , pointer        :: t2va01 => null()
         integer                           :: ivar05
         integer                           :: ivar06
-        real(kind=8)     , pointer        :: rarr02(:)
+        real(kind=8)     , pointer        :: rarr02(:) => null()
         integer                           :: ivar07
         integer                           :: ivar08
-        type(type_04)    , pointer        :: t4va01 ! here a unnullified pointer of linked list is super dangerous!
+        type(type_04)    , pointer        :: t4va01 => null()
         integer                           :: ivar09
         real(kind=8)     , dimension(-4:9,2:19) :: rarr03 = 3D0 ! in Python we still index from 0
         integer                           :: ivar10
         integer                           :: ivar11
-        character(len=:) , pointer        :: cvar03
+        character(len=:) , pointer        :: cvar03 => null()
         integer                           :: ivar12
         type(type_02)                     :: t2ar01(3,2)
         real(kind=8)                      :: rvar01 = 1.1111D0
@@ -83,7 +79,7 @@ module yourModule
         real(kind=8)                      :: rvar03
         real(kind=8)                      :: rvar04
         logical                           :: lvar01
-        type(type_02)    , pointer        :: t2ar02(:,:)
+        type(type_02)    , pointer        :: t2ar02(:,:) => null()
         logical                           :: lvar02 = .false.
         logical                           :: lvar03 = .true.
         integer                           :: ivar13
@@ -93,13 +89,13 @@ module yourModule
         logical                           :: lvar04
         integer                           :: ivar15 = 15
         logical                           :: lvar05
-        real(kind=4)     , pointer        :: rvar06
+        real(kind=4)     , pointer        :: rvar06 => null()
         integer                           :: ivar16
         integer                           :: ivar17
         integer                           :: ivar18
         integer                           :: ivar19
         integer                           :: ivar20
-        character(len=:) , pointer        :: carr02(:)
+        character(len=:) , pointer        :: carr02(:) => null()
         integer                           :: ivar21
         real(kind=4)                      :: rvar07
         real(kind=8)                      :: rvar08
@@ -146,7 +142,7 @@ module yourModule
         real(kind=8)     , allocatable    :: rarr11(:)
         real(kind=8)     , allocatable    :: rarr12(:,:)
         integer                           :: ivar37 = 37
-        logical          , pointer        :: lvar09
+        logical          , pointer        :: lvar09 => null()
         integer                           :: ivar38
         integer                           :: ivar39
         integer                           :: ivar40
@@ -182,7 +178,7 @@ module yourModule
         integer                           :: iarr03(2,3)= reshape((/ 44,55,66,77,88,99 /), (/2,3/))
         real(kind=8)                      :: rvar29
         real(kind=8)                      :: rvar30
-        real             , pointer        :: rarr19(:)
+        real             , pointer        :: rarr19(:) => null()
         type(type_03)    , allocatable    :: t3ar01(:)
         real(kind=8)                      :: rvar31 = 0.045D0
         type(type_03)                     :: t3ar02(3)
@@ -223,9 +219,9 @@ module yourModule
     logical          , parameter :: var01_of_logical = .true.
     character(len=15), parameter :: var01_of_char = 'Happy New Year!'
     real(kind=4)     , target    :: var03_of_real = 3.3333_sp
-    real(kind=4)     , pointer   :: var04_of_real
+    real(kind=4)     , pointer   :: var04_of_real => null()
     character(len=21)            :: arr01_of_char(3,4,5) = 'Hello, World!'
-    character(len=5) , pointer   :: arr02_of_char(:)
+    character(len=16), pointer   :: arr02_of_char(:) => null()
     integer          , dimension(-3:5) :: arr03_of_int = (/-3,-2,-1,0,1,2,3,4,5/)
 
     public :: var_of_t04, var_of_t00
@@ -237,23 +233,32 @@ module yourModule
     contains
         subroutine procedure_xx(self)
             class(type_03) :: self
+            print *, "procedure_xx: loc =", loc(self)
+            call self%procedure_xxx()
         endsubroutine procedure_xx
         subroutine procedure_xxx(self)
             class(type_03) :: self
+            print *, "procedure_xxx: loc =", loc(self)
         endsubroutine procedure_xxx
         subroutine xx_int(self, i)
             class(type_03) :: self
             integer        :: i
+            print *, "xx_int: loc =", loc(self)
+            print *, "xx_int: i =", i
         endsubroutine xx_int
         subroutine xx_float(self, f)
             class(type_03) :: self
             real(kind=4)   :: f
+            print *, "xx_float: loc =", loc(self)
+            print *, "xx_float: f =", f
         endsubroutine xx_float
         subroutine procedure_yy(self)
             class(type_03) :: self
+            print *, "procedure_yy: loc =", loc(self)
         endsubroutine procedure_yy
         subroutine procedure_yyy(self)
             class(type_03) :: self
+            print *, "procedure_yyy: loc =", loc(self)
         endsubroutine procedure_yyy
 
 endmodule yourModule
