@@ -1,4 +1,5 @@
 from . import example_dirs
+from time import time
 
 def callback(*args) -> int:
     '''Callback function for DL_FIND'''
@@ -22,8 +23,6 @@ def callback(*args) -> int:
 
     # we could even run more Python methods
     callback.obj.doSomething()
-
-
 
     ##################################################################
     # PART 2 (optional): Fortran-to-Python
@@ -104,6 +103,7 @@ def callback(*args) -> int:
     # `real(kind=8)     , dimension(-4:9,2:19) :: rarr03 = 3D0`
     print(" >>> callback (Py): libexample.modules.yourmodule.var_of_t04.rarr03.shape =\n"+" "*19,
                                libexample.modules.yourmodule.var_of_t04.rarr03.shape)
+    # in Python we cannot use customised indices (l-/ubounds) as rarr03 is declared
     print(" >>> callback (Py): libexample.yourmodule.arr03_of_int =\n"+" "*19,
                                libexample.modules.yourmodule.arr03_of_int)
 
@@ -232,5 +232,29 @@ def callback(*args) -> int:
     for i in range(len(var_of_t04.rarr21)):
         var_of_t04.rarr21[i] = float(i+1)
 
+
+    # we support PDE-style slicing
+    print("\n >>> callback (Py): scanning along var_of_t04.t2ar02[:,2], ivar04 =")
+    for a in var_of_t04.t2ar02[:,2]:
+        print(a.ivar04, end=' ')
+    print("\n >>> callback (Py): scanning along var_of_t04.t2ar02[1:5,:], ivar04 =")
+    for a in var_of_t04.t2ar02[1:5,:]:
+        print(a.ivar04, end=' ')
+    print("\n >>> callback (Py): scanning along var_of_t04.t2ar02[::2,::2], ivar04 =")
+    for a in var_of_t04.t2ar02[::2,::2]:
+        print(a.ivar04, end=' ')
+    print("\n >>> callback (Py): scanning along var_of_t04.t2ar02[...,1], ivar04 =")
+    for a in var_of_t04.t2ar02[...,1]:
+        print(a.ivar04, end=' ')
+    print("\n >>> callback (Py): scanning along var_of_t04.t2ar02[1,:,2], ivar04 =")
+    print("\n >>> callback (Py): scanning along var_of_t04.t2ar02[-2:-1,:-2], ivar04 =")
+    for a in var_of_t04.t2ar02[-2:-1,-2]:
+        print(a.ivar04, end=' ')
+    print("\n >>> callback (Py): scanning along var_of_t04.t2ar02[::-1,0], ivar04 =")
+    for a in var_of_t04.t2ar02[::-1,0]:
+        print(a.ivar04, end=' ')
+    print("\n >>> callback (Py): shape of var_of_t04.t2ar02[:,None,:] =")
+    print(var_of_t04.t2ar02[:,None,:].shape)
+    print('', flush=True)
 
     return 0
