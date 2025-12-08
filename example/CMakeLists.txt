@@ -6,6 +6,10 @@ project(My_Code
         HOMEPAGE_URL "www.gitlab.com"
         LANGUAGES     Fortran)
 
+# for DL_PY2F installed via PyPI (pip)
+set(Python_FIND_VIRTUALENV FIRST)
+find_package(Python REQUIRED)
+
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 set(CMAKE_Fortran_MODULE_DIRECTORY ${PROJECT_BINARY_DIR}/modules)
 
@@ -24,9 +28,9 @@ if(FROM_SOURCE)
     include_directories(${PROJECT_BINARY_DIR}/dl_py2f/modules)
 # use the system DL_PY2F: on Debian-type system only (installed via apt)
 else()
-    link_directories(/lib/x86_64-linux-gnu)
+    target_link_directories(example PRIVATE /lib/x86_64-linux-gnu ${Python_SITELIB}/dl_py2f)
     #set_target_properties(example PROPERTIES LINK_FLAGS "-L/lib/x86_64-linux-gnu -ldl_py2f")
-    include_directories(/usr/include/x86_64-linux-gnu)
+    target_include_directories(example PRIVATE /usr/include/x86_64-linux-gnu ${Python_SITELIB}/dl_py2f)
 endif()
 
 target_link_libraries(example dl_py2f)

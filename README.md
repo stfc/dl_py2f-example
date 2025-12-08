@@ -75,7 +75,9 @@ For compiling and running this example application with the source code of `DL_P
 
 Please see the `bash` script [`compile_from_source.sh`](https://github.com/stfc/dl_py2f-example/blob/main/compile_from_source.sh) provided by the example package for this method.
 
-### Using system installed `DL_PY2F` (Debian only)
+### Using system-installed `DL_PY2F` (Debian only)
+
+:heavy_exclamation_mark: **Caution:** `DL_PY2F` installed this way only works with application projects compiled with **gfortran** due to the precompiled dl_py2f.mod we shipped.
 
 `DL_PY2F` has been published and deployed on [launchpad.net](https://launchpad.net/~dl-py2f/+archive/ubuntu/ppa) and is thus available for installing using `apt` for Debian-type systems (e.g., Ubuntu):
 
@@ -104,6 +106,20 @@ Compiling the example package is similar to the steps of the above method, just 
 `$ cmake ..; make`
 
 Please see the `bash` script [`install_with_apt.sh`](https://github.com/stfc/dl_py2f-example/blob/main/install_with_apt.sh) provided by the example package for this method.
+
+### Using PyPI-distributed `DL_PY2F`
+
+:heavy_exclamation_mark: **Caution:** `DL_PY2F` installed this way only works with application projects compiled with **gfortran** due to the precompiled dl_py2f.mod we shipped.
+
+`DL_PY2F` is also available as a [PyPI package](https://pypi.org/project/dl-py2f) and and can be installed using the `pip` command (strongly recommended under a Python virtual environment):
+
+`$ python3 -m venv .venv`
+
+`$ source .venv/bin/activate`
+
+`$ pip install --upgrade pip`
+
+`$ pip install dl_py2f`
 
 ## Running
 

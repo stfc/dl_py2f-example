@@ -27,3 +27,7 @@ cd $cwd
 export PYTHONPATH=$cwd
 echo $cwd
 python3 user_script.py
+echo  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo  Please note apt-installed DL_PY2F works only with projects compiled with gfortran!
+echo  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+python3 -c "import dl_py2f; print(f' DL_PY2F location:\n {dl_py2f.__file__}')"
