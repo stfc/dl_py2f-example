@@ -121,6 +121,8 @@ Please see the `bash` script [`install_with_apt.sh`](https://github.com/stfc/dl_
 
 `$ pip install dl_py2f`
 
+Please see the `bash` script [`install_with_pip.sh`](https://github.com/stfc/dl_py2f-example/blob/main/install_with_pip.sh) provided by the example package for this method.
+
 ## Running
 
 There is an exemplar user input script for launching the example project. To run it, please
@@ -145,7 +147,7 @@ There is an exemplar user input script for launching the example project. To run
 
 `$ make clean`
 
-:bulb: There is also a bash script _compile.sh_ containing all the above steps which is ready for executing.
+:bulb: The above-mentioned bash scripts contain all the above steps and are ready for executing.
 
 # Miscellaneous
 
