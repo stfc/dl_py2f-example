@@ -111,7 +111,7 @@ Please see the `bash` script [`install_with_apt.sh`](https://github.com/stfc/dl_
 
 :heavy_exclamation_mark: **Caution:** `DL_PY2F` installed this way only works with application projects compiled with **gfortran** due to the precompiled dl_py2f.mod we shipped.
 
-`DL_PY2F` is also available as a [PyPI package](https://pypi.org/project/dl-py2f) and and can be installed using the `pip` command (strongly recommended under a Python virtual environment):
+`DL_PY2F` is also available as a [PyPI package](https://pypi.org/project/dl-py2f) and and can be installed using the `pip` command (strongly recommended to run under a Python virtual environment):
 
 `$ python3 -m venv .venv`
 
