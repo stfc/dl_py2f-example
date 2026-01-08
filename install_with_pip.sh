@@ -1,5 +1,13 @@
 #!/bin/bash
 
+export FC=gfortran
+export CC=gcc
+export CXX=g++
+# uncomment to use Intel compilers
+#export FC=ifx
+#export CC=icx
+#export CXX=icpx
+
 # create a Python virtual environment
 rm -rf .venv
 python3 -m venv .venv
@@ -25,9 +33,6 @@ cmake ..; make
 cd $cwd
 export PYTHONPATH=$cwd
 python3 user_script.py
-echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-echo Please note pip-installed DL_PY2F works only with projects compiled with gfortran!
-echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 python3 -c "import dl_py2f; print(f' DL_PY2F location:\n {dl_py2f.__file__}')"
 
 # exit the virtual environment
