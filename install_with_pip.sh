@@ -1,12 +1,13 @@
 #!/bin/bash
 
 export FC=gfortran
-export CC=gcc
 export CXX=g++
 # uncomment to use Intel compilers
 #export FC=ifx
-#export CC=icx
 #export CXX=icpx
+# uncomment to use Flang/Clang++ compilers
+#export FC=flang-22
+#export CXX=clang++-22
 
 # create a Python virtual environment
 rm -rf .venv

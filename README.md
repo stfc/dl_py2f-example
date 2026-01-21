@@ -18,9 +18,9 @@ You Lu and Thomas W. Keal, *Journal of Open Source Software*, in preparation
 
 ## Project status
 
-The Python-to-Fortran interoperability demonstrated in `DL_PY2F example` has been comprehensively tested using both GNU and Intel compilers.
+The Python-to-Fortran interoperability demonstrated in `DL_PY2F example` has been comprehensively tested using GNU, Intel, and Flang/Clang++ compilers.
 
-:warning: **Warning:** However, the method for Fortran-to-Python interoperability demonstrated in `DL_PY2F example` is still undergoing testing and validation, and is currently limited to use with the GNU compiler gfortran, as the proprietary .mod file format used by the Intel compiler is not yet supported.
+:warning: **Warning:** However, the method for Fortran-to-Python interoperability demonstrated in `DL_PY2F example` is still undergoing testing and validation, and is currently limited to use with the GNU compiler gfortran, as the proprietary .mod file format used by the Intel compiler or other compilers' .mod format is not yet supported.
 
 # Getting started
 
@@ -29,8 +29,10 @@ The Python-to-Fortran interoperability demonstrated in `DL_PY2F example` has bee
 
 | Tools & Libraries             | Min. version | Note |
 |:------------------------------|:-------------|:-----|
-| gcc/gfortran                  | 7.3          |      |
-| OR icc/ifort                  | 17           | :warning: |
+| g++/gfortran                  | 11           |      |
+| OR icpc/ifort                 | 17           | :warning: |
+| OR icpx/ifx                   | 2024         | :warning: |
+| OR clang++/flang              | 22           | :warning: |
 | cmake                         | 3.16         |      |
 | python3-dev                   | 3.8          |      |
 | python3-numpy                 | 1.21.5       |      |
@@ -39,7 +41,7 @@ The Python-to-Fortran interoperability demonstrated in `DL_PY2F example` has bee
        operating systems.
 
 :warning: The Fortran-to-Python method does **NOT** yet work with the Intel compilers as Intel's proprietary
-          .mod file format is unpublished and unsupported.
+          .mod file format is unpublished and unsupported. Its support for Flang/Clang++ is yet to be implemented.
 
 ## Compiling
 
@@ -111,11 +113,15 @@ Please see the `bash` script [`install_with_apt.sh`](https://github.com/stfc/dl_
 
 `DL_PY2F` is also available as a [PyPI package](https://pypi.org/project/dl-py2f) and and can be installed using the `pip` command. Define the compilers if you use GNU tools:
 
-`export FC=gfortran; export CC=gcc; export CXX=g++`
+`export FC=gfortran; export CXX=g++`
 
 or Intel ones (:warning: Only the Python-to-Fortran interoperability works with Intel compilers):
 
-`export FC=ifx; export CC=icx; export CXX=icpx`
+`export FC=ifx; export CXX=icpx`
+
+or Flang/Clang++ (:warning: Only the Python-to-Fortran interoperability works with Flang/Clang++):
+
+`export FC=flang-22; export CXX=clang++-22`
 
 We strongly recommend to run it under a Python virtual environment:
 

@@ -4,16 +4,20 @@ cwd=$PWD
 
 # download DL_PY2F and build the example project
 cd example
-rm -rf dl_py2f
+#rm -rf dl_py2f
 rm -rf build
 mkdir build
-git clone https://github.com/stfc/dl_py2f.git dl_py2f
+#git clone https://github.com/stfc/dl_py2f.git dl_py2f
 cd build
 
+export FC=gfortran
+export CXX=g++
 # uncomment to use Intel compilers
 #export FC=ifx
-#export CC=icx
 #export CXX=icpx
+# uncomment to use Flang/Clang++ compilers
+#export FC=flang-22
+#export CXX=clang++-22
 
 cmake -DFROM_SOURCE:BOOL=TRUE ..; make
 
