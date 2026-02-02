@@ -8,6 +8,9 @@ export CXX=g++
 # uncomment to use Flang/Clang++ compilers
 #export FC=flang-22
 #export CXX=clang++-22
+# uncomment to use NVIDIA HPC compilers
+#export FC=nvfortran
+#export CXX=nvc++
 
 # create a Python virtual environment
 rm -rf .venv

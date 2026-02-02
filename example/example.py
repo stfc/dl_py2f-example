@@ -51,7 +51,7 @@ class Example(ctypes.Structure):
     # a master array of the numpy.recarray type will be created as self._master containing
     # the following fields (in the given sequence)
     # NB: all must be of 8-byte (64-bit) types for aligning!
-    _fields     = 'names', 'factors', 'coords', 'tags', 'names', 'tags', 'arr', 'zmatrix'
+    _fields     = 'names', 'factors', 'coords', 'tags', 'arr', 'zmatrix'
 
     # initialisation (by @dl_py2f.utils.objutils.init()) of entities defined in this sequence
     # will be prioritised, typically to deal with dependencies
@@ -202,7 +202,7 @@ class Example(ctypes.Structure):
     def doSomething(self):
         ''''''
 
-        print('\n >>> Example.doSomething() (Py)')
+        print('\n >>> Example.doSomething() (Py):')
 
 
 
