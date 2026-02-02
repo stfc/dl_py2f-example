@@ -11,6 +11,7 @@ except:
 from .example import Example
 
 def doSomething(obj):
+    '''We run the Fortran code here and get the number of validation errors as returned value'''
 
     print(f'\n >>> doSomething (Py): NumPy version = {numpy.__version__}')
 
@@ -20,12 +21,16 @@ def doSomething(obj):
     objRef = dl_py2f.py2f(obj, byref=True, debug=0)
 
     print(f'\n >>> doSomething (Py): calling to the Fortran function interface_example()...')
-    ierror = libexample.interface_example(objRef)
+    nerrors = libexample.interface_example(objRef)
+
+    return nerrors
+
 
 # not used if the program is started from a user input script
 if __name__ == '__main__':
 
     doSomething()
+
 
 # for convenience these names can be imported by the user with `from example import *`
 __all__ = 'callback', 'doSomething', 'dl_py2f', 'Example'

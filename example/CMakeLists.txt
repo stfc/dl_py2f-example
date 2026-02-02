@@ -37,6 +37,17 @@ endif()
 target_link_libraries(example dl_py2f)
 
 
+# we need preprocessors (primarily for making nvfortran happy)
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(example PRIVATE $<$<COMPILE_LANGUAGE:Fortran>:-cpp>)
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "NVHPC")
+    target_compile_options(example PRIVATE $<$<COMPILE_LANGUAGE:Fortran>:-Mpreprocess>)
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel" OR CMAKE_Fortran_COMPILER_ID STREQUAL "IntelLLVM")
+    target_compile_options(example PRIVATE $<$<COMPILE_LANGUAGE:Fortran>:-fpp>)
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "Flang" OR CMAKE_Fortran_COMPILER_ID STREQUAL "LLVMFlang")
+    target_compile_options(example PRIVATE $<$<COMPILE_LANGUAGE:Fortran>:-cpp>)
+endif()
+
 # either 32- or 64-bit integers (without or with -fdefault-integer-8 for GNU) should work for the Fortran->Python
 # interoperability however use of -fdefault-integer-8 must be in line with DL_PY2F
 if("${CMAKE_Fortran_COMPILER_ID}" STREQUAL GNU)
@@ -47,6 +58,8 @@ elseif("${CMAKE_Fortran_COMPILER_ID}" STREQUAL IntelLLVM OR "CMAKE_Fortran_COMPI
     set_target_properties(example PROPERTIES COMPILE_FLAGS "-O2 -fPIC")
 # set_target_properties(dl_py2f ...) is only needed when compiling DL_PY2F from source
 #    set_target_properties(dl_py2f PROPERTIES COMPILE_FLAGS "-O2 -fPIC")
+elseif("${CMAKE_Fortran_COMPILER_ID}" STREQUAL NVHPC)
+    set_target_properties(example PROPERTIES COMPILE_FLAGS "-O2 -fPIC")
 else()
     message(" WARNING: Unknown CMAKE_FORTRAN_COMPILER_ID!")
 endif()

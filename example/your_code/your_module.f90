@@ -24,11 +24,20 @@ module yourModule
     type type_03
         real(kind=4)               :: rarr00(13)
         integer      , pointer     :: ivar00 => null() ! DL_PY2F will issue a warning if the pointer isn't initialised by nullifying when debug=True
+#ifdef __NVCOMPILER
+        ! nvfortran doesn't support recursive allocatable components which is a Fortran 2008 feature
+        type(type_03), pointer     :: t3ar00(:) => null()
+#else
         type(type_03), allocatable :: t3ar00(:)
+#endif
         type(type_03), pointer     :: t3va00 => null()
         integer                    :: ivar01
         type(type_02)              :: t2ar01(5)
+#ifdef __NVCOMPILER
+        type(type_03), pointer     :: t3ar01(:,:) => null()
+#else
         type(type_03), allocatable :: t3ar01(:,:)
+#endif
         integer                    :: ivar02
         real(kind=8)               :: rarr01(3,4) = 3.4
         integer                    :: iarr01(2,3,4) = 234
