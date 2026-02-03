@@ -4,10 +4,12 @@ cwd=$PWD
 
 # download DL_PY2F and build the example project
 cd example
-#rm -rf dl_py2f
+
+rm -rf dl_py2f
+git clone https://github.com/stfc/dl_py2f.git dl_py2f
+
 rm -rf build
 mkdir build
-#git clone https://github.com/stfc/dl_py2f.git dl_py2f
 cd build
 
 # GNU compilers

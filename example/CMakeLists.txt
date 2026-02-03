@@ -25,7 +25,7 @@ add_library(example SHARED example.f90
 # compile DL_PY2F from source
 if(FROM_SOURCE)
     add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/dl_py2f)
-    include_directories(${PROJECT_BINARY_DIR}/dl_py2f/modules)
+    include_directories(${CMAKE_CURRENT_LIST_DIR}/dl_py2f)
 # /lib/x86_64-linux-gnu and /usr/include/x86_64-linux-gnu which are for the system-wide installed DL_PY2F (on Debian-type system only installed via apt)
 # are overriden by ${Python_SITELIB}/dl_py2f which is the locally installed one via Python virtual env
 else()
