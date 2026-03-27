@@ -1,0 +1,60 @@
+name: NVIDIA
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install NVIDIA HPC SDK
+      run: |
+        curl -fsSL https://developer.download.nvidia.com/hpc-sdk/ubuntu/DEB-GPG-KEY-NVIDIA-HPC-SDK \
+          | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg
+        echo 'deb [signed-by=/usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg] https://developer.download.nvidia.com/hpc-sdk/ubuntu/amd64 /' \
+          | sudo tee /etc/apt/sources.list.d/nvhpc.list
+        sudo apt-get update
+        sudo apt-get install -y nvhpc-26-1
+        echo "/opt/nvidia/hpc_sdk/Linux_x86_64/26.1/compilers/bin" >> $GITHUB_PATH
+
+    - name: NumPy
+      run: python3 -m pip install numpy
+
+    - name: Clone DL_PY2F
+      working-directory: ${{github.workspace}}/example
+      run: git clone https://github.com/stfc/dl_py2f.git dl_py2f
+
+    - name: mkdir
+      working-directory: ${{github.workspace}}/example
+      run: mkdir build
+
+    - name: Configure CMake
+      working-directory: ${{github.workspace}}/example/build
+      run: cmake -DFROM_SOURCE:BOOL=TRUE ${{github.workspace}}/example
+      env:
+        FC: nvfortran
+        CXX: nvc++
+
+    - name: Build
+      working-directory: ${{github.workspace}}/example/build
+      run: make
+
+    - name: Test
+      working-directory: ${{github.workspace}}
+      run: |
+        set -o pipefail
+        python3 user_script.py
+      env:
+        PYTHONPATH: ${{github.workspace}}
+        FC: nvfortran
