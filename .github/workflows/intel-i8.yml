@@ -1,0 +1,59 @@
+name: Intel -i8
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Intel OneAPI Fortran
+      run: |
+        curl -fsSL https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
+          | sudo gpg --dearmor -o /usr/share/keyrings/oneapi-archive-keyring.gpg
+        echo 'deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main' \
+          | sudo tee /etc/apt/sources.list.d/oneAPI.list
+        sudo apt-get update
+        sudo apt-get install -y intel-oneapi-compiler-fortran intel-oneapi-compiler-dpcpp-cpp
+        source /opt/intel/oneapi/setvars.sh
+        echo "/opt/intel/oneapi/compiler/latest/bin" >> $GITHUB_PATH
+        echo "LD_LIBRARY_PATH=/opt/intel/oneapi/compiler/latest/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+
+    - name: NumPy
+      run: python3 -m pip install numpy
+
+    - name: Clone DL_PY2F
+      working-directory: ${{github.workspace}}/example
+      run: git clone https://github.com/stfc/dl_py2f.git dl_py2f
+
+    - name: mkdir
+      working-directory: ${{github.workspace}}/example
+      run: mkdir build
+
+    - name: Configure CMake
+      working-directory: ${{github.workspace}}/example/build
+      run: cmake -DFROM_SOURCE:BOOL=TRUE -DCMAKE_Fortran_FLAGS="-i8" ${{github.workspace}}/example
+      env:
+        FC: ifx
+        CXX: icpx
+
+    - name: Build
+      working-directory: ${{github.workspace}}/example/build
+      run: make
+
+    - name: Test
+      working-directory: ${{github.workspace}}
+      run: |
+        set -o pipefail
+        python3 user_script.py
+      env:
+        PYTHONPATH: ${{github.workspace}}
+        FC: ifx

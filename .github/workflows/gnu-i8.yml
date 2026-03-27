@@ -1,0 +1,43 @@
+name: GNU -fdefault-integer-8
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: NumPy
+      run: python3 -m pip install numpy
+
+    - name: Clone DL_PY2F
+      working-directory: ${{github.workspace}}/example
+      run: git clone https://github.com/stfc/dl_py2f.git dl_py2f
+
+    - name: mkdir
+      working-directory: ${{github.workspace}}/example
+      run: mkdir build
+
+    - name: Configure CMake
+      working-directory: ${{github.workspace}}/example/build
+      run: cmake -DFROM_SOURCE:BOOL=TRUE -DCMAKE_Fortran_FLAGS="-fdefault-integer-8" ${{github.workspace}}/example
+
+    - name: Build
+      working-directory: ${{github.workspace}}/example/build
+      run: make
+
+    - name: Test
+      working-directory: ${{github.workspace}}
+      run: |
+        set -o pipefail
+        python3 user_script.py
+      env:
+        PYTHONPATH: ${{github.workspace}}
