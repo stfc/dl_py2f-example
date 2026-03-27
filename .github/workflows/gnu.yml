@@ -38,7 +38,7 @@ jobs:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v4
@@ -62,54 +62,11 @@ jobs:
       working-directory: ${{github.workspace}}/example/build
       run: make
 
-    - name: Environment
-      run: |
-        gfortran --version | head -1
-        python3 --version
-        dpkg -l | grep libgfortran | head -3
-        ldd --version | head -1
-        uname -r
-
-    - name: Diagnostic
-      working-directory: ${{github.workspace}}
-      run: |
-        python3 -c "
-        import numpy as np; print(f'numpy {np.__version__}')
-        import sys; sys.path.insert(0,'.'); from example.example import Example
-        e = Example(); e.size = 2
-        print(f'itemsize: {e._master.dtype.itemsize}')
-        for name in e._master.dtype.names:
-            off = e._master.dtype.fields[name][1]
-            print(f'  {name:12s}: offset={off}')
-        import ctypes; print(f'sizeof(c_long)={ctypes.sizeof(ctypes.c_long)}')
-        "
-      env:
-        PYTHONPATH: ${{github.workspace}}
-
     - name: Test
       working-directory: ${{github.workspace}}
       run: |
-        python3 -c "
-        from example import *
-        import numpy, ctypes, sys
-        e = Example(); e.size = 10
-        e.coords = numpy.arange(30, dtype=float).reshape(10,3)
-        e.tags = numpy.arange(10)
-        e.c[::2] = 11
-        e.zmatrix['j'] = range(10); e.zmatrix['bond'] = 1.5
-        e.zmatrix['k'] = range(10); e.zmatrix['angle'] = 90.0
-        e.zmatrix['l'] = range(10); e.zmatrix['dihedral'] = 180.0
-        print(f'PRE  tags addr=0x{e._master.tags.ctypes.data:x} vals={e.tags.tolist()[:3]}', flush=True)
-        print(f'PRE  coords addr=0x{e._master.coords.ctypes.data:x} vals={e.coords[0].tolist()}', flush=True)
-        print(f'PRE  master addr=0x{e._master.ctypes.data:x} strides={e._master.strides}', flush=True)
-        n = doSomething(e); sys.stdout.flush()
-        print(f'POST tags={e.tags.tolist()}', flush=True)
-        print(f'POST coords[0]={e.coords[0].tolist()}', flush=True)
-        tags_ref = list(range(100,110))
-        assert e.tags.tolist() == tags_ref, f'FAIL: tags={e.tags.tolist()}'
-        print('PASSED', flush=True)
-        import os; os._exit(0)
-        "
+        set -o pipefail
+        python3 user_script.py
       env:
         PYTHONPATH: ${{github.workspace}}
 
