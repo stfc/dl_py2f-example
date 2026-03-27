@@ -16,11 +16,11 @@ class Example(ctypes.Structure):
     # decorator (a setter is mandatory)
     # NB: currently we support only 1- and 2-D arrays
     _kwargs = {
-                # an array can be independent from self._master
+                # an array can be independent from self._mega
                 'a'       : zeros(shape=(1)  ,      dtype=float64),
                 'b'       : zeros(shape=(1)  ,      dtype=float64),
                 'callback': callback.callback,
-                # NB: as part of self._master, all dtypes must be 64-bit to be aligned in memory!
+                # NB: as part of self._mega, all dtypes must be 64-bit to be aligned in memory!
                 'coords'  : zeros(shape=(1,3),      dtype=float64),
                 'arr'     : zeros(shape=(1,9),      dtype=int64),
                 'c'       : zeros(shape=(5)  ,      dtype=int64),
@@ -36,10 +36,10 @@ class Example(ctypes.Structure):
                 # other scalar values can be passed to Fortran but note that they are immutable in Python
                 # (to make their values altered please use a one-element array such as `energy` above)
                 'scale'   : 1.23456,
-                # normally the size of self._master is important
+                # normally the size of self._mega is important
                 'size'    : 0,
                 'tags'    : zeros(shape=(1,)  ,      dtype=int64),
-                # we can even embed another struectured array in self._master
+                # we can even embed another struectured array in self._mega
                 'zmatrix' : zeros(shape=(1,)  ,      dtype=dtype([('j'       ,int64),
                                                                   ('bond'    ,float64),
                                                                   ('k'       ,int64),
@@ -48,7 +48,7 @@ class Example(ctypes.Structure):
                                                                   ('dihedral',float64)])),
               }
 
-    # a master array of the numpy.recarray type will be created as self._master containing
+    # a master array of the numpy.recarray type will be created as self._mega containing
     # the following fields (in the given sequence)
     # NB: all must be of 8-byte (64-bit) types for aligning!
     _fields     = 'names', 'factors', 'coords', 'tags', 'arr', 'zmatrix'
@@ -107,67 +107,67 @@ class Example(ctypes.Structure):
     def coords(self):
         '''Cartesian coordinates'''
 
-        return self._master.coords
+        return self._mega.coords
 
 
     @coords.setter
     def coords(self, val):
         '''Setter of cartesian coordinates'''
 
-        self._master.setField(val, field='coords')
+        self._mega.setField(val, field='coords')
 
 
     @property
     def tags(self):
         '''Cartesian coordinates'''
 
-        return self._master.tags
+        return self._mega.tags
 
 
     @tags.setter
     def tags(self, val):
         '''Setter of cartesian coordinates'''
 
-        self._master.setField(val, field='tags')
+        self._mega.setField(val, field='tags')
 
 
     @property
     def size(self):
         '''Size of the master array (e.g., the number of particles)'''
 
-        return self._master.shape[0]
+        return self._mega.shape[0]
 
 
-    # this is just an example of creating and resizing self._master
+    # this is just an example of creating and resizing self._mega
     @size.setter
     def size(self, val):
         '''Example setter of size'''
 
         # if _master exists
         try:
-            self._master.expand(val)
+            self._mega.expand(val)
         # create one if not
         except:
-            # get the wanted dtype for self._master conveniently using the facility function
+            # get the wanted dtype for self._mega conveniently using the facility function
             # but you could create your own method
             dt = dl_py2f.utils.nputils.getDTypeFromObj(self)
-            # we strongly recommend to use our type RecArray derived from numpy.recarray to create self._master 
-            self._master = dl_py2f.utils.nputils.RecArray(shape=(val,), dtype=dt)
+            # we strongly recommend to use our type RecArray derived from numpy.recarray to create self._mega 
+            self._mega = dl_py2f.utils.nputils.RecArray(shape=(val,), dtype=dt)
 
 
-    # here is how we view the structured array (embedded in self._master) as a mask array
+    # here is how we view the structured array (embedded in self._mega) as a mask array
     @property
     def zmatrix(self):
         '''Internal coordinates (Z-matrix)'''
 
         from numpy import isfinite, ma, stack
 
-        b = self._master.zmatrix.bond
-        a = self._master.zmatrix.angle
-        d = self._master.zmatrix.dihedral
-        j = self._master.zmatrix.j
-        k = self._master.zmatrix.k
-        l = self._master.zmatrix.l
+        b = self._mega.zmatrix.bond
+        a = self._mega.zmatrix.angle
+        d = self._mega.zmatrix.dihedral
+        j = self._mega.zmatrix.j
+        k = self._mega.zmatrix.k
+        l = self._mega.zmatrix.l
 
         # array of masks
         mask = stack([j==-1, ~(isfinite(b)),
@@ -176,7 +176,7 @@ class Example(ctypes.Structure):
                      axis=-1)
 
         # construct the masked array
-        marray = self._master.zmatrix.view(ma.MaskedArray)
+        marray = self._mega.zmatrix.view(ma.MaskedArray)
 
         # apply the masking rules
         for i in range(marray.mask.size):
