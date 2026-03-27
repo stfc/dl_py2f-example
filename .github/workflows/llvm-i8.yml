@@ -1,0 +1,56 @@
+name: LLVM/Flang -i8
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install LLVM/Flang
+      run: |
+        curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key \
+          | sudo gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] https://apt.llvm.org/$(lsb_release -cs)/ llvm-toolchain-$(lsb_release -cs)-22 main" \
+          | sudo tee /etc/apt/sources.list.d/llvm-22.list
+        sudo apt-get update
+        sudo apt-get install -y flang-22 clang-22
+
+    - name: NumPy
+      run: python3 -m pip install numpy
+
+    - name: Clone DL_PY2F
+      working-directory: ${{github.workspace}}/example
+      run: git clone https://github.com/stfc/dl_py2f.git dl_py2f
+
+    - name: mkdir
+      working-directory: ${{github.workspace}}/example
+      run: mkdir build
+
+    - name: Configure CMake
+      working-directory: ${{github.workspace}}/example/build
+      run: cmake -DFROM_SOURCE:BOOL=TRUE -DCMAKE_Fortran_FLAGS="-fdefault-integer-8" ${{github.workspace}}/example
+      env:
+        FC: flang-new-22
+        CXX: clang++-22
+
+    - name: Build
+      working-directory: ${{github.workspace}}/example/build
+      run: make
+
+    - name: Test
+      working-directory: ${{github.workspace}}
+      run: |
+        set -o pipefail
+        python3 user_script.py
+      env:
+        PYTHONPATH: ${{github.workspace}}
+        FC: flang-new-22

@@ -49,8 +49,7 @@ def callback(*args) -> int:
     for symbol in symbols:
         print('    ', symbol, flush=True)
         if 'yourmodule_mp_procedure_xxx' in symbol \
-        or '_QMyourmodulePprocedure_xxx' in symbol \
-        or 'yourmodule_procedure_xxx_'   in symbol:
+        or '_QMyourmodulePprocedure_xxx' in symbol:
             unsupported = True
 
     # currently only works with GNU

@@ -4,9 +4,8 @@ name: GNU
 
 on:
   push:
-    branches: 
+    branches:
       - main
-      - 22-update-for-dl_py2f
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
