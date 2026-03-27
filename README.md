@@ -1,9 +1,13 @@
 # DL_PY2F Example
 
 [![GNU](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml)
+[![GNU -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml)
 [![NVIDIA](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia.yml)
+[![NVIDIA -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia-i8.yml)
 [![Intel](https://github.com/stfc/dl_py2f-example/actions/workflows/intel.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/intel.yml)
+[![Intel -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/intel-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/intel-i8.yml)
 [![LLVM/Flang](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm.yml)
+[![LLVM/Flang -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm-i8.yml)
 
 # About
 
