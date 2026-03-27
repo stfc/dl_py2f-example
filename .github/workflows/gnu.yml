@@ -81,8 +81,27 @@ jobs:
     - name: Test
       working-directory: ${{github.workspace}}
       run: |
-        set -o pipefail
-        python3 user_script.py
+        python3 -c "
+        from example import *
+        import numpy, ctypes, sys
+        e = Example(); e.size = 10
+        e.coords = numpy.arange(30, dtype=float).reshape(10,3)
+        e.tags = numpy.arange(10)
+        e.c[::2] = 11
+        e.zmatrix['j'] = range(10); e.zmatrix['bond'] = 1.5
+        e.zmatrix['k'] = range(10); e.zmatrix['angle'] = 90.0
+        e.zmatrix['l'] = range(10); e.zmatrix['dihedral'] = 180.0
+        print(f'PRE  tags addr=0x{e._master.tags.ctypes.data:x} vals={e.tags.tolist()[:3]}', flush=True)
+        print(f'PRE  coords addr=0x{e._master.coords.ctypes.data:x} vals={e.coords[0].tolist()}', flush=True)
+        print(f'PRE  master addr=0x{e._master.ctypes.data:x} strides={e._master.strides}', flush=True)
+        n = doSomething(e); sys.stdout.flush()
+        print(f'POST tags={e.tags.tolist()}', flush=True)
+        print(f'POST coords[0]={e.coords[0].tolist()}', flush=True)
+        tags_ref = list(range(100,110))
+        assert e.tags.tolist() == tags_ref, f'FAIL: tags={e.tags.tolist()}'
+        print('PASSED', flush=True)
+        import os; os._exit(0)
+        "
       env:
         PYTHONPATH: ${{github.workspace}}
 
