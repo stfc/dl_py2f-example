@@ -9,8 +9,17 @@ DWARF_TO_CTYPE = { 'INTEGER*4': c_int,
                    'LOGICAL*4': c_bool,
                    'LOGICAL*8': c_bool }
 
+def _find_readelf():
+    for cmd in ['readelf', 'greadelf']:
+        try:
+            subprocess.run([cmd, '--version'], capture_output=True)
+            return cmd
+        except FileNotFoundError:
+            continue
+    return 'readelf'
+
 def parse_dwarf(libpath, module_name):
-    dw         = subprocess.run(['readelf', '-wi', libpath], capture_output=True, text=True)
+    dw         = subprocess.run([_find_readelf(), '-wi', libpath], capture_output=True, text=True)
     types      = {}
     cur_off    = None
     cur_tag    = None

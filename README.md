@@ -1,13 +1,15 @@
 # DL_PY2F Example
 
 [![GNU](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml)
-[![GNU -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml)
+[![GNU -fdefault-integer-8](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml)
+[![GNU (macOS)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-macos.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-macos.yml)
+[![GNU (macOS) -fdefault-integer-8](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-macos-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-macos-i8.yml)
 [![NVIDIA](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia.yml)
 [![NVIDIA -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia-i8.yml)
 [![Intel](https://github.com/stfc/dl_py2f-example/actions/workflows/intel.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/intel.yml)
 [![Intel -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/intel-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/intel-i8.yml)
-[![LLVM/Flang](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm.yml)
-[![LLVM/Flang -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm-i8.yml)
+[![LLVM](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm.yml)
+[![LLVM -fdefault-integer-8](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/llvm-i8.yml)
 
 # About
 
@@ -21,13 +23,13 @@ This package contains a toy application which demonstrates how to use [`DL_PY2F`
 
 Applications using `DL_PY2F` should cite:
 
-You Lu and Thomas W. Keal, *Journal of Open Source Software*, in preparation
+You Lu and Thomas W. Keal, *Journal of Open Source Software*, under review
 
 ## Project status
 
 The Python-to-Fortran interoperability demonstrated in `DL_PY2F example` has been comprehensively tested using GNU, Intel, and Flang/Clang++ compilers. It also works with NVIDIA HPC compilers although currently arrays must be retrieved and altered in the "safe mode" (`readonly=.true.`) due to a bug in nvfortran.
 
-:warning: **Warning:** However, the method for Fortran-to-Python interoperability demonstrated in `DL_PY2F example` is still undergoing testing and validation, and is currently limited to use with the GNU compiler **gfortran** and the NVIDIA HPC compiler **nvfortran**, as the proprietary .mod file format used by the Intel compiler or other compilers' .mod format is not yet supported.
+:warning: **Warning:** However, the method for Fortran-to-Python interoperability demonstrated in `DL_PY2F example` is still undergoing testing and validation, and is currently limited to use with the GNU compiler **gfortran**, LLVM compiler **Flang**, and the NVIDIA HPC compiler **nvfortran**, as the proprietary .mod file format used by the Intel compiler or other compilers' .mod format is not yet supported.
 
 # Getting started
 
@@ -39,7 +41,7 @@ The Python-to-Fortran interoperability demonstrated in `DL_PY2F example` has bee
 | g++/gfortran                  | 11           |      |
 | OR icpc/ifort                 | 17           | :warning: |
 | OR icpx/ifx                   | 2024         | :warning: |
-| OR clang++/flang              | 22           | :warning: |
+| OR clang++/flang              | 22           |      |
 | OR nvc++/nvfortran            | 26.1         |      |
 | cmake                         | 3.16         |      |
 | python3-dev                   | 3.8          |      |
@@ -48,9 +50,9 @@ The Python-to-Fortran interoperability demonstrated in `DL_PY2F example` has bee
 :bulb: The above package names are based on Ubuntu Linux. They may vary on other
        operating systems.
 
-:warning: The Fortran-to-Python method does **NOT** yet work with the Intel or Flang/Clang++ compilers.[^a]
+:warning: The Fortran-to-Python method does **NOT** yet work with the Intel compilers.[^a]
 
-[^a]: Intel's proprietary .mod file format is unpublished and unsupported. Support for Flang/Clang++ is yet to be implemented.
+[^a]: Intel's proprietary .mod file format is unpublished and unsupported.
 
 ## Compiling
 
@@ -128,7 +130,7 @@ or Intel ones (:warning: Only the Python-to-Fortran interoperability works with 
 
 `export FC=ifx; export CXX=icpx`
 
-or Flang/Clang++ (:warning: Only the Python-to-Fortran interoperability works with Flang/Clang++):
+or Flang/Clang++
 
 `export FC=flang-22; export CXX=clang++-22`
 

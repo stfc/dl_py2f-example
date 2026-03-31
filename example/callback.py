@@ -37,15 +37,16 @@ def callback(*args) -> int:
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     from . import dl_py2f
-    from os import path
+    from os import path, uname
     from ctypes import c_float, c_double, c_long
 
-    libexample = dl_py2f.DL_DL(path.join(example_dirs.libdir, 'libexample.so'))
+    _ext = '.dylib' if uname().sysname == 'Darwin' else '.so'
+    libexample = dl_py2f.DL_DL(path.join(example_dirs.libdir, 'libexample' + _ext))
 
     # in case you want to find out all symbols in the shared library
     symbols = libexample.getModuleSymbols('yourmodule')
     unsupported = False
-    print('\n Symbols exported from', path.join(example_dirs.libdir, 'libexample.so'))
+    print('\n Symbols exported from', path.join(example_dirs.libdir, 'libexample' + _ext))
     for symbol in symbols:
         print('    ', symbol, flush=True)
         pass
