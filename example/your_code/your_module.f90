@@ -232,12 +232,34 @@ module yourModule
     character(len=21)            :: arr01_of_char(3,4,5) = 'Hello, World!'
     character(len=16), pointer   :: arr02_of_char(:) => null()
     integer          , dimension(-3:5) :: arr03_of_int = (/-3,-2,-1,0,1,2,3,4,5/)
+    integer(kind=4)  , parameter :: var01_of_int = 42
+    integer(kind=8)  , parameter :: var02_of_int = 99
+    real(kind=4)     , parameter :: var05_of_real = 3.14
+    real(kind=8)     , parameter :: var06_of_real = 2.718d0
+    character(len=8) , parameter :: var02_of_char = 'DL_PY2F!'
+    logical          , parameter :: var02_of_logical = .false.
+    integer(kind=4)  , parameter :: arr04_of_int(3) = (/10,20,30/)
+    real(kind=8)     , parameter :: arr01_of_real(2) = (/1.1d0,2.2d0/)
+    integer(kind=4)  , pointer   :: var03_of_int => null()
+    integer(kind=8)  , pointer   :: var04_of_int => null()
+    real(kind=8)     , pointer   :: var07_of_real => null()
+    logical          , pointer   :: var03_of_logical => null()
+    character(len=10), pointer   :: var03_of_char => null()
+    real(kind=4)     , pointer   :: arr02_of_real(:) => null()
+    integer(kind=4)  , pointer   :: arr05_of_int(:,:) => null()
+    real(kind=8)     , pointer   :: arr03_of_real(:) => null()
 
     public :: var_of_t04, var_of_t00
     public :: var01_of_real, var02_of_real, var03_of_real, var04_of_real
     public :: var01_of_logical, var01_of_char
     public :: arr01_of_int, arr02_of_int, arr03_of_int
     public :: arr01_of_char, arr02_of_char
+    public :: var01_of_int, var02_of_int, var03_of_int, var04_of_int
+    public :: var05_of_real, var06_of_real, var07_of_real
+    public :: var02_of_char, var03_of_char
+    public :: var02_of_logical, var03_of_logical
+    public :: arr04_of_int, arr05_of_int
+    public :: arr01_of_real, arr02_of_real, arr03_of_real
 
     contains
         subroutine procedure_xx(self)
