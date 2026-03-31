@@ -1,4 +1,4 @@
-name: LLVM/Flang -fdefault-integer-8
+name: LLVM -fdefault-integer-8
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: LLVM/Flang
+name: LLVM
 
 on:
   push:
