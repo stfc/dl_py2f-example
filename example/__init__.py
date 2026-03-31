@@ -15,7 +15,8 @@ def doSomething(obj):
 
     print(f'\n >>> doSomething (Py): NumPy version = {numpy.__version__}')
 
-    soname = os.path.join(example_dirs.libdir, 'libexample.so')
+    _ext   = '.dylib' if os.uname().sysname == 'Darwin' else '.so'
+    soname = os.path.join(example_dirs.libdir, 'libexample' + _ext)
     libexample = ctypes.CDLL(soname)
 
     objRef = dl_py2f.py2f(obj, byref=True, debug=0)

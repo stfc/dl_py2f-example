@@ -1,4 +1,4 @@
-name: LLVM
+name: GNU (macOS)
 
 on:
   push:
@@ -8,27 +8,18 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-env:
-  BUILD_TYPE: Release
-
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install LLVM/Flang
-      run: |
-        curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key \
-          | sudo gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] https://apt.llvm.org/$(lsb_release -cs)/ llvm-toolchain-$(lsb_release -cs)-22 main" \
-          | sudo tee /etc/apt/sources.list.d/llvm-22.list
-        sudo apt-get update
-        sudo apt-get install -y flang-22 clang-22
+    - name: Install gfortran and binutils
+      run: brew install gcc binutils
 
     - name: NumPy
-      run: python3 -m pip install numpy
+      run: python3 -m pip install numpy --break-system-packages
 
     - name: Clone DL_PY2F
       working-directory: ${{github.workspace}}/example
@@ -42,8 +33,8 @@ jobs:
       working-directory: ${{github.workspace}}/example/build
       run: cmake -DFROM_SOURCE:BOOL=TRUE -DCMAKE_Fortran_FLAGS="-g" ${{github.workspace}}/example
       env:
-        FC: flang-new-22
-        CXX: clang++-22
+        FC: gfortran-14
+        CXX: g++-14
 
     - name: Build
       working-directory: ${{github.workspace}}/example/build
@@ -56,10 +47,9 @@ jobs:
         python3 user_script.py
       env:
         PYTHONPATH: ${{github.workspace}}
-        FC: flang-new-22
 
     - name: DWARF regression test
       working-directory: ${{github.workspace}}
-      run: python3 .github/workflows/test_dwarf.py example/build/lib/libexample.so example/build/modules/yourmodule.mod
+      run: python3 .github/workflows/test_dwarf.py example/build/lib/libexample.dylib example/build/modules/yourmodule.mod
       env:
         PYTHONPATH: ${{github.workspace}}
