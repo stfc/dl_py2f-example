@@ -48,14 +48,8 @@ def callback(*args) -> int:
     print('\n Symbols exported from', path.join(example_dirs.libdir, 'libexample.so'))
     for symbol in symbols:
         print('    ', symbol, flush=True)
-        if 'yourmodule_mp_procedure_xxx' in symbol \
-        or '_QMyourmodulePprocedure_xxx' in symbol:
-            unsupported = True
+        pass
 
-    # currently only works with GNU
-    if unsupported:
-        print('\n Skipping Fortran-to-Python interoperability because we do not yet support it with Intel or Flang or NVIDIA compilers...')
-        return 0
 
     ##################################################################
     ### method A: implicit module parsing

@@ -43,7 +43,7 @@ jobs:
 
     - name: Configure CMake
       working-directory: ${{github.workspace}}/example/build
-      run: cmake -DFROM_SOURCE:BOOL=TRUE ${{github.workspace}}/example
+      run: cmake -DFROM_SOURCE:BOOL=TRUE -DCMAKE_Fortran_FLAGS="-g" ${{github.workspace}}/example
       env:
         FC: ifx
         CXX: icpx
@@ -60,3 +60,9 @@ jobs:
       env:
         PYTHONPATH: ${{github.workspace}}
         FC: ifx
+
+    - name: DWARF regression test
+      working-directory: ${{github.workspace}}
+      run: python3 .github/workflows/test_dwarf.py example/build/lib/libexample.so example/build/modules/yourmodule.mod
+      env:
+        PYTHONPATH: ${{github.workspace}}
