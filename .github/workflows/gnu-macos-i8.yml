@@ -32,6 +32,9 @@ jobs:
     - name: Configure CMake
       working-directory: ${{github.workspace}}/example/build
       run: cmake -DFROM_SOURCE:BOOL=TRUE -DCMAKE_Fortran_FLAGS="-fdefault-integer-8 -g" ${{github.workspace}}/example
+      env:
+        FC: gfortran-14
+        CXX: g++-14
 
     - name: Build
       working-directory: ${{github.workspace}}/example/build
