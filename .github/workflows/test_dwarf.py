@@ -6,8 +6,8 @@ DWARF_TO_CTYPE = { 'INTEGER*4': c_int,
                    'INTEGER*8': c_long,
                    'REAL*4'   : c_float,
                    'REAL*8'   : c_double,
-                   'LOGICAL*4': c_bool,
-                   'LOGICAL*8': c_bool }
+                   'LOGICAL*4': (c_bool, c_int),
+                   'LOGICAL*8': (c_bool, c_long) }
 
 def _find_readelf():
     for cmd in ['readelf', 'greadelf']:
@@ -72,6 +72,10 @@ def parse_dwarf(libpath, module_name):
             elif ak == 'DW_AT_linkage_name':
                 nm = re.search(r'\):\s*(.+)', av)
                 cur_attr['_linkage'] = nm.group(1).strip() if nm else av
+            elif ak == 'DW_AT_external':
+                cur_attr['_external'] = av.strip().startswith('1')
+            elif ak == 'DW_AT_location':
+                cur_attr['_location'] = av.strip()
     if cur_off is not None:
         types[cur_off] = (cur_tag, dict(cur_attr), list(subranges))
 
@@ -85,7 +89,7 @@ def parse_dwarf(libpath, module_name):
         elif tag == 'DW_TAG_string_type':
             return { 'type'   : c_char_p,
                      'is_char': True,
-                     'length' : attr.get('_byte_size', 1) }
+                     'length' : attr.get('_byte_size') }
         elif tag == 'DW_TAG_array_type':
             inner = resolve_type(attr.get('_type_ref', 0), depth + 1)
             dims  = []
@@ -108,16 +112,29 @@ def parse_dwarf(libpath, module_name):
                      'size'      : attr.get('_byte_size', 0) }
         return {}
 
-    prefix    = f'{module_name}_mp_'
+    prefixes = [ f'__{module_name}_MOD_',
+                 f'{module_name}_mp_',
+                 f'_QM{module_name}E' ]
     variables = {}
     for off, (tag, attr, subs) in types.items():
-        if tag == 'DW_TAG_variable':
-            lnk = attr.get('_linkage', '')
-            if lnk.startswith(prefix):
-                vn   = lnk[len(prefix):-1] if lnk.endswith('_') else lnk[len(prefix):]
-                tref = attr.get('_type_ref')
-                if tref is not None:
-                    variables[vn] = resolve_type(tref)
+        if tag != 'DW_TAG_variable':
+            continue
+        vn   = None
+        lnk  = attr.get('_linkage', '')
+        for pat in prefixes:
+            if lnk.startswith(pat):
+                vn = lnk[len(pat):]
+                if vn.endswith('_'):
+                    vn = vn[:-1]
+                break
+        if vn is None:
+            if attr.get('_external') and 'DW_OP_addr' in attr.get('_location', ''):
+                vn = attr.get('_name', '')
+        if not vn or vn in variables:
+            continue
+        tref = attr.get('_type_ref')
+        if tref is not None:
+            variables[vn] = resolve_type(tref)
 
     type_members = {}
     cur_struct   = None
@@ -163,6 +180,14 @@ def run_test(libpath, modpath):
             if isinstance(dtype, str):
                 if isinstance(ptype, str) and ptype == dtype:
                     npass += 1
+            elif isinstance(dtype, tuple):
+                if ptype in dtype:
+                    npass += 1
+                else:
+                    _dn = '|'.join(t.__name__ for t in dtype)
+                    print(f'  FAIL type: {vn}: parser={ptype.__name__ if hasattr(ptype,"__name__") else ptype}'
+                          f'  DWARF={_dn}')
+                    nerrors += 1
             elif dtype == ptype:
                 npass += 1
             else:
