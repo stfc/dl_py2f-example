@@ -2,8 +2,6 @@
 
 [![GNU](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml)
 [![GNU -fdefault-integer-8](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml)
-[![GNU (macOS)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-macos.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-macos.yml)
-[![GNU (macOS) -fdefault-integer-8](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-macos-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-macos-i8.yml)
 [![NVIDIA](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia.yml)
 [![NVIDIA -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia-i8.yml)
 [![Intel](https://github.com/stfc/dl_py2f-example/actions/workflows/intel.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/intel.yml)
@@ -28,6 +26,8 @@ You Lu and Thomas W. Keal, *Journal of Open Source Software*, under review
 ## Project status
 
 The Python-to-Fortran interoperability demonstrated in `DL_PY2F example` has been comprehensively tested using GNU, Intel, and Flang/Clang++ compilers. It also works with NVIDIA HPC compilers although currently arrays must be retrieved and altered in the "safe mode" (`readonly=.true.`) due to a bug in nvfortran.
+
+Please note that `DL_PY2F` currently supports Linux only. macOS is not supported, as the Fortran-to-Python layer relies on Linux-specific ELF and dynamic-linker facilities.
 
 :warning: **Warning:** However, the method for Fortran-to-Python interoperability demonstrated in `DL_PY2F example` is still undergoing testing and validation, and is currently limited to use with the GNU compiler **gfortran**, LLVM compiler **Flang**, and the NVIDIA HPC compiler **nvfortran**, as the proprietary .mod file format used by the Intel compiler or other compilers' .mod format is not yet supported.
 

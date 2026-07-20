@@ -1,11 +1,9 @@
 name: GNU (macOS) -fdefault-integer-8
 
+# macOS is not currently supported by DL_PY2F (the Fortran-to-Python layer
+# relies on Linux-specific ELF and dynamic-linker facilities), so this
+# workflow is kept for future porting work and runs on manual dispatch only
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
