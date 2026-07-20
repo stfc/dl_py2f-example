@@ -2,6 +2,7 @@
 
 [![GNU](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu.yml)
 [![GNU -fdefault-integer-8](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-i8.yml)
+[![GNU (ARM64)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-arm.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/gnu-arm.yml)
 [![NVIDIA](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia.yml)
 [![NVIDIA -i8](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia-i8.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/nvidia-i8.yml)
 [![Intel](https://github.com/stfc/dl_py2f-example/actions/workflows/intel.yml/badge.svg)](https://github.com/stfc/dl_py2f-example/actions/workflows/intel.yml)
