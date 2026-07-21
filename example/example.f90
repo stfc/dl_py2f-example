@@ -147,6 +147,8 @@ module ExampleModule
 
         ierror = ierror_main
 
+        flush(6)
+
     endfunction interface_example
 
 endmodule ExampleModule
