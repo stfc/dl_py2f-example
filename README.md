@@ -22,7 +22,7 @@ This package contains a toy application which demonstrates how to use [`DL_PY2F`
 
 Applications using `DL_PY2F` should cite:
 
-You Lu and Thomas W. Keal, *Journal of Open Source Software*, under review
+You Lu and Thomas W. Keal, "DL_PY2F: A library for Python-Fortran interoperability", *Journal of Open Source Software*, **11**(123), 8992 (2026). https://doi.org/10.21105/joss.08992
 
 ## Project status
 
